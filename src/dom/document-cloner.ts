@@ -93,8 +93,17 @@ export class DocumentCloner {
                 return Promise.reject(`Error finding the ${this.referenceElement.nodeName} in the cloned document`);
             }
 
+            const sleep = (t: number) =>
+                new Promise(r => {
+                    const instanceName = 'iframe document';
+                    Logger.create({id: instanceName, enabled: true});
+                    Logger.getInstance(instanceName).debug(`try sleep ${t}ms...`);
+                    Logger.destroy(instanceName);
+                    setTimeout(r, t);
+                });
+
             if (documentClone.fonts && documentClone.fonts.ready) {
-                await documentClone.fonts.ready;
+                await Promise.race([documentClone.fonts.ready, sleep(2000)]);
             }
 
             if (typeof onclone === 'function') {
