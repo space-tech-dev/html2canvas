@@ -34,7 +34,7 @@
   "scripts": {
     "copybuild": "mkdirp public/dist && cpy ../dist/*.js public/dist",
     "build": "npm run copybuild && gatsby build",
-    "start": "gatsby develop",
+    "start": "gatsby develop -H 0.0.0.0",
     "test": "echo \"Error: no test specified\" && exit 1"
   }
 }
